@@ -1,0 +1,36 @@
+---
+abstract: 'Geocaching modules'
+author:
+  - 'Chris Moewes-Bystrom <chris.moewes@gmail.com>'
+build_requires:
+  File::Find::Rule::Perl: 0
+  File::Spec: 0
+  PPI: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300009, CPAN::Meta::Converter version 2.120630'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Geocache
+requires:
+  DBI: 0
+  DBIx::Class: 0
+  DBIx::Class::Schema: 0
+  Data::Dumper: 0
+  IO::File: 0
+  LWP::Simple: 0
+  Lingua::EN::Nums2Words: 0
+  Moose: 0
+  MooseX::AbstractFactory: 0
+  Params::Validate: 0
+  base: 0
+  strict: 0
+  warnings: 0
+resources:
+  bugtracker: https://github.com/cmoewes/Geocache/issues
+  homepage: http://search.cpan.org/dist/Geocache/
+  repository: git://github.com/cmoewes/Geocache.git
+version: 1.120680

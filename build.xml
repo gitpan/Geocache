@@ -1,0 +1,87 @@
+<project name="Geocache">
+
+	<property environment="envar" />
+
+	<exec executable="git" dir="${basedir}" outputproperty="dev.branch" description="Sets the dev.branch property to the current checked out branch">
+		<arg value="rev-parse" />
+		<arg value="--abbrev-ref" />
+		<arg value="HEAD" />
+	</exec>
+
+	<macrodef name="git">
+		<attribute name="command" />
+		<attribute name="dir" default="" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}">
+				<arg value="@{command}" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
+
+
+	<target name="git.hub.push" depends="" description="Push changes to github">
+		<git command="push">
+			<args>
+				<arg value="--all" />
+				<arg value="github" />
+			</args>
+		</git>
+	</target>
+
+	<target name="git.local.commit" depends="" description="git commit">
+		<git command="citool" />
+	</target>
+
+	<target name="git.master.push" depends="" description="push current branch to origin">
+		<git command="push">
+			<args>
+				<arg value="origin" />
+				<arg value="${dev.branch}:${dev.branch}" />
+			</args>
+		</git>
+	</target>
+
+	<target name="build.local">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build.PL" />
+		</exec>
+	</target>
+
+	<target name="build.local.manifest" depends="build.local" description="Add all new files to manifest">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build" />
+			<arg value="manifest" />
+		</exec>
+	</target>
+	<target name="build.local.test" depends="build.local" description="Run unit tests under test harness">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build" />
+			<arg value="test" />
+		</exec>
+	</target>
+	<target name="build.local.test.critic" depends="build.local" description="Run critic tests under test harness">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build" />
+			<arg value="test" />
+			<arg value="--test_files" />
+			<arg value="t/perl-critic.t" />
+			<arg value="--verbose" />
+		</exec>
+	</target>
+	<target name="build.local.clean" depends="build.local" description="Run unit tests under test harness">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build" />
+			<arg value="realclean" />
+		</exec>
+	</target>
+
+	<target name="build.local.dist" depends="build.local,build.local.test" description="Run unit tests under test harness">
+		<exec executable="perl" failonerror="yes">
+			<arg value="Build" />
+			<arg value="dist" />
+		</exec>
+	</target>
+</project>
